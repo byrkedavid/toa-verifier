@@ -36,6 +36,46 @@ function normalizePosition(value) {
   return value.trim().replace(/\s+/g, '').toUpperCase();
 }
 
+function formatPositionInput(value) {
+  const digits = value.replace(/\D+/g, '').slice(0, 9);
+  if (digits.length <= 2) return digits;
+
+  const parts = [digits.slice(0, 2)];
+  if (digits.length <= 4) {
+    parts.push(digits.slice(2));
+    return parts.join('-');
+  }
+
+  parts.push(digits.slice(2, 4));
+  if (digits.length <= 7) {
+    parts.push(digits.slice(4));
+    return parts.join('-');
+  }
+
+  parts.push(digits.slice(4, 7));
+  if (digits.length <= 9) {
+    parts.push(digits.slice(7));
+    return parts.join('-');
+  }
+
+  parts.push(digits.slice(7, 9));
+  return parts.join('-');
+}
+
+function formatPositionInputValue(value, selectionStart) {
+  const digitsBeforeCursor = value.slice(0, selectionStart).replace(/\D+/g, '').length;
+  const formatted = formatPositionInput(value);
+
+  let cursor = 0;
+  let seenDigits = 0;
+  while (cursor < formatted.length && seenDigits < digitsBeforeCursor) {
+    if (/\d/.test(formatted[cursor])) seenDigits += 1;
+    cursor += 1;
+  }
+
+  return { formatted, cursor };
+}
+
 function positionParts(position) {
   return position.split(/[^0-9]+/).filter(Boolean).map(Number);
 }
@@ -53,7 +93,8 @@ function comparePositions(a, b) {
 }
 
 function addPosition() {
-  const position = normalizePosition(els.input.value);
+  const position = normalizePosition(formatPositionInput(els.input.value));
+  els.input.value = position;
   els.formMessage.textContent = '';
 
   if (!position) {
@@ -62,8 +103,8 @@ function addPosition() {
     return;
   }
 
-  if (!/^\d+(?:-\d+)+$/.test(position)) {
-    els.formMessage.textContent = 'Use a numeric position code separated by hyphens.';
+  if (!/^\d{2}-\d{2}-\d{3}-\d{2}$/.test(position)) {
+    els.formMessage.textContent = 'Use a full position code in the form xx-xx-xxx-xx.';
     els.input.focus();
     return;
   }
@@ -188,6 +229,13 @@ function downloadText() {
 }
 
 els.add.addEventListener('click', addPosition);
+els.input.addEventListener('input', event => {
+  const input = /** @type {HTMLInputElement} */ (event.target);
+  const position = input.value;
+  const { formatted, cursor } = formatPositionInputValue(position, input.selectionStart || position.length);
+  input.value = formatted;
+  input.setSelectionRange(cursor, cursor);
+});
 els.input.addEventListener('keydown', event => {
   if (event.key === 'Enter') addPosition();
 });
