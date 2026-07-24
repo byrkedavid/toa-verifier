@@ -9,7 +9,7 @@
   <title>TOA Receiver</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="aws-logo.webp" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="app-header">
@@ -20,15 +20,17 @@
         <h1>TOA Verifier</h1>
       </div>
     </div>
-    <button id="themeButton" class="icon-button" type="button" aria-label="Toggle high contrast">◐</button>
+    <button
+  id="themeButton"
+  class="icon-button"
+  type="button"
+  aria-label="Switch to dark mode"
+>
+  ◐
+</button>
   </header>
 
   <main class="page-shell">
-    <section class="summary-panel" aria-label="Current position count">
-      <span class="status-dot"></span>
-      <span id="positionCount">0 positions</span>
-    </section>
-
     <section class="add-panel">
       <label for="positionInput">Add position</label>
       <div class="add-row">
@@ -53,7 +55,10 @@
           <p class="eyebrow">Current crate</p>
           <h2>Positions</h2>
         </div>
-        <button id="clearButton" class="text-button danger-text" type="button">Clear all</button>
+        <div class="heading-actions">
+          <span id="positionCount" class="position-count" aria-label="Current position count">0 positions</span>
+          <button id="clearButton" class="text-button danger-text" type="button">Clear all</button>
+        </div>
       </div>
 
       <div id="emptyState" class="empty-state">
@@ -127,6 +132,6 @@
     </article>
   </template>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
