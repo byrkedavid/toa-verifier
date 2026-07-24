@@ -262,6 +262,18 @@ body.dark-mode textarea::placeholder {
   color: #7f8b9a;
 }
 
+@media (max-width: 610px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .count-input {
+    font-size: 16px;
+  }
+}
+
 @media (min-width: 700px) {
   .page-shell { padding: 18px; }
   .action-bar { justify-content: center; grid-template-columns: 190px 220px; }
