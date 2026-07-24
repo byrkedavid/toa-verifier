@@ -1,0 +1,17 @@
+{
+  "name": "TOA Verifier",
+  "short_name": "TOA Verify",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#131a22",
+  "description": "Mobile receiving and cable-count verification tool.",
+  "icons": [
+    {
+      "src": "aws-logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#131A22" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>TOA Receiver</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="aws-logo.webp" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-wrap">
+      <img class="brand-logo" src="aws-logo.webp" alt="AWS" />
+      <div>
+        <p class="eyebrow">Receiving tool</p>
+        <h1>TOA Verifier</h1>
+      </div>
+    </div>
+    <button id="themeButton" class="icon-button" type="button" aria-label="Toggle high contrast">◐</button>
+  </header>
+
+  <main class="page-shell">
+    <section class="summary-panel" aria-label="Current position count">
+      <span class="status-dot"></span>
+      <span id="positionCount">0 positions</span>
+    </section>
+
+    <section class="add-panel">
+      <label for="positionInput">Add position</label>
+      <div class="add-row">
+        <input
+          id="positionInput"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          autocapitalize="characters"
+          placeholder="02-02-020-54"
+          aria-describedby="positionHelp"
+        />
+        <button id="addPositionButton" class="primary-button" type="button">Add</button>
+      </div>
+      <p id="positionHelp" class="helper-text">Full position code; duplicates are blocked.</p>
+      <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="list-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Current crate</p>
+          <h2>Positions</h2>
+        </div>
+        <button id="clearButton" class="text-button danger-text" type="button">Clear all</button>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">＋</div>
+        <h3>Add your first position</h3>
+        <p>Enter quantities by typing or using the compact plus and minus controls.</p>
+      </div>
+
+      <div id="positionList" class="position-list"></div>
+    </section>
+  </main>
+
+  <footer class="action-bar">
+    <button id="previewButton" class="secondary-button" type="button">Preview</button>
+    <button id="copyButton" class="primary-button" type="button">Copy text</button>
+  </footer>
+
+  <dialog id="exportDialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Sorted output</p>
+          <h2>TOA receiving list</h2>
+        </div>
+        <button class="icon-button dialog-close" value="cancel" aria-label="Close">✕</button>
+      </div>
+      <textarea id="exportText" readonly></textarea>
+      <div class="dialog-actions">
+        <button id="downloadButton" class="secondary-button" type="button">Download .txt</button>
+        <button id="dialogCopyButton" class="primary-button" type="button">Copy</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="positionCardTemplate">
+    <article class="position-card">
+      <div class="position-main">
+        <div class="position-id">
+          <span class="position-code"></span>
+        </div>
+
+        <div class="compact-counter" data-type="fiber">
+          <span class="counter-label"><span class="material-dot fiber-dot"></span>Fiber</span>
+          <div class="mini-stepper">
+            <button class="step-button minus" type="button" aria-label="Subtract fiber">−</button>
+            <input class="count-input" type="number" inputmode="numeric" min="0" step="1" aria-label="Fiber quantity" />
+            <button class="step-button plus" type="button" aria-label="Add fiber">+</button>
+          </div>
+        </div>
+
+        <div class="compact-counter" data-type="orange">
+          <span class="counter-label"><span class="material-dot orange-dot"></span>Orange</span>
+          <div class="mini-stepper">
+            <button class="step-button minus" type="button" aria-label="Subtract orange copper">−</button>
+            <input class="count-input" type="number" inputmode="numeric" min="0" step="1" aria-label="Orange copper quantity" />
+            <button class="step-button plus" type="button" aria-label="Add orange copper">+</button>
+          </div>
+        </div>
+
+        <div class="compact-counter" data-type="green">
+          <span class="counter-label"><span class="material-dot green-dot"></span>Green</span>
+          <div class="mini-stepper">
+            <button class="step-button minus" type="button" aria-label="Subtract green copper">−</button>
+            <input class="count-input" type="number" inputmode="numeric" min="0" step="1" aria-label="Green copper quantity" />
+            <button class="step-button plus" type="button" aria-label="Add green copper">+</button>
+          </div>
+        </div>
+
+        <button class="delete-position" type="button" aria-label="Delete position" title="Delete position">✕</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
