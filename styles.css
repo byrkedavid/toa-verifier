@@ -29,6 +29,12 @@ body {
 }
 button, input, textarea { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
+button,
+input,
+.position-card,
+.action-bar {
+  touch-action: manipulation;
+}
 h1, h2, h3, p { margin: 0; }
 
 .app-header {
